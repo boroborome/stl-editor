@@ -9,13 +9,15 @@ public class ConditionExpressionFormater extends StlFormater<ConditionExpression
     protected void doFormat(ConditionExpression expression, TabPrintStream output) {
         StlFormater.format(expression.getCriteriaExpression(), output);
 
+        output.increaseTab();
         boolean first = true;
         for (StlExpression subExp : expression.getExpressionList()) {
-            if (!first) {
+            if (!first && output.getTabs() > 1) {
                 output.println("AENO");
             }
             first = false;
             StlFormater.format(subExp, output);
         }
+        output.descreaseTab();
     }
 }
