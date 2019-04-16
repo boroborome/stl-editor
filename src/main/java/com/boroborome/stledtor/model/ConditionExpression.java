@@ -8,7 +8,7 @@ import java.util.List;
 
 @Getter
 @Setter
-public class StlConditionExpression {
-    private CirteriaExpression cirteriaExpression;
+public class ConditionExpression extends StlExpression {
+    private CommandExpression criteriaExpression = new CommandExpression();
     private List<StlExpression> expressionList = new ArrayList<>();
 }

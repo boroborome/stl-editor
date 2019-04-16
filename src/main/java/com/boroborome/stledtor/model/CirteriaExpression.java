@@ -1,4 +1,4 @@
 package com.boroborome.stledtor.model;
 
-public class CirteriaExpression extends SingleExpression {
+public class CirteriaExpression extends CommandExpression {
 }
