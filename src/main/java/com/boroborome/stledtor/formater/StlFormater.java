@@ -3,17 +3,17 @@ package com.boroborome.stledtor.formater;
 import com.boroborome.stledtor.model.CommandExpression;
 import com.boroborome.stledtor.model.ConditionExpression;
 import com.boroborome.stledtor.model.StlExpression;
+import com.boroborome.stledtor.util.TabPrintStream;
 
-import java.io.PrintStream;
 import java.util.HashMap;
 import java.util.Map;
 
 public abstract class StlFormater<T extends StlExpression> {
     private static final Map<Class, StlFormater> formaterMap = initializeFormaterMap();
 
-    protected abstract void doFormat(T expression, PrintStream output);
+    protected abstract void doFormat(T expression, TabPrintStream output);
 
-    public static void format(StlExpression conditionExpression, PrintStream output) {
+    public static void format(StlExpression conditionExpression, TabPrintStream output) {
         StlFormater formater = formaterMap.get(conditionExpression.getClass());
         formater.doFormat(conditionExpression, output);
     }

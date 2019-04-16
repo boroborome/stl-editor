@@ -1,12 +1,11 @@
 package com.boroborome.stledtor.formater;
 
 import com.boroborome.stledtor.model.CommandExpression;
-
-import java.io.PrintStream;
+import com.boroborome.stledtor.util.TabPrintStream;
 
 public class CommandExpressionFormater extends StlFormater<CommandExpression> {
     @Override
-    protected void doFormat(CommandExpression expression, PrintStream output) {
+    protected void doFormat(CommandExpression expression, TabPrintStream output) {
         output.print(expression.getCommand());
         output.print("\t");
 

@@ -2,14 +2,12 @@ package com.boroborome.stledtor.formater;
 
 import com.boroborome.stledtor.model.ConditionExpression;
 import com.boroborome.stledtor.model.StlExpression;
-
-import java.io.PrintStream;
+import com.boroborome.stledtor.util.TabPrintStream;
 
 public class ConditionExpressionFormater extends StlFormater<ConditionExpression> {
     @Override
-    protected void doFormat(ConditionExpression expression, PrintStream output) {
+    protected void doFormat(ConditionExpression expression, TabPrintStream output) {
         StlFormater.format(expression.getCriteriaExpression(), output);
-        output.println("LPS");
 
         boolean first = true;
         for (StlExpression subExp : expression.getExpressionList()) {
@@ -19,6 +17,5 @@ public class ConditionExpressionFormater extends StlFormater<ConditionExpression
             first = false;
             StlFormater.format(subExp, output);
         }
-        output.println("LPP");
     }
 }

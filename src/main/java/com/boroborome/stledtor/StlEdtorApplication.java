@@ -5,6 +5,7 @@ import com.boroborome.stledtor.formater.StlProjectFormater;
 import com.boroborome.stledtor.model.StlProject;
 import com.boroborome.stledtor.util.IndicatorIterator;
 import com.boroborome.stledtor.util.LocatedStream;
+import com.boroborome.stledtor.util.TabPrintStream;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -22,7 +23,7 @@ public class StlEdtorApplication {
 		}
 
 		IndicatorIterator indicatorIterator = loadIndicatorIterator(args[0]);
-		PrintStream output = creatOutput(args[2]);
+		TabPrintStream output = creatOutput(args[2]);
 
 		StlProject project = loadProject(indicatorIterator);
 		System.out.println(JSON.toJSONString(project));
@@ -35,8 +36,8 @@ public class StlEdtorApplication {
 		return project;
 	}
 
-	private static PrintStream creatOutput(String outputFile) throws FileNotFoundException {
-		return new PrintStream(new FileOutputStream(new File(outputFile)), true);
+	private static TabPrintStream creatOutput(String outputFile) throws FileNotFoundException {
+		return new TabPrintStream(new FileOutputStream(new File(outputFile)), true);
 	}
 
 	private static IndicatorIterator loadIndicatorIterator(String inputFile) throws FileNotFoundException {
