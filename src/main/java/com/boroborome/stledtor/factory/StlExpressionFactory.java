@@ -29,6 +29,6 @@ public abstract class StlExpressionFactory {
                 return expression;
             }
         }
-        return null;
+        throw new IllegalArgumentException("Unsupported command:" + indicatorIterator.locateMessage());
     }
 }

@@ -6,6 +6,7 @@ import com.boroborome.stledtor.model.StlExpression;
 import com.boroborome.stledtor.util.IndicatorIterator;
 
 import java.util.List;
+import java.util.Objects;
 
 public class ConditionExpressionFactory extends StlExpressionFactory {
     @Override
@@ -16,7 +17,6 @@ public class ConditionExpressionFactory extends StlExpressionFactory {
 
         ConditionExpression conditionExpression = new ConditionExpression();
         indicatorIterator.ignore("[");
-        StlExpressionFactory.parseExpression(indicatorIterator, CommandExpression.class);
         conditionExpression.setCriteriaExpression(StlExpressionFactory.parseExpression(indicatorIterator, CommandExpression.class));
         indicatorIterator.ignore("]");
         indicatorIterator.ignore("{");
@@ -27,8 +27,7 @@ public class ConditionExpressionFactory extends StlExpressionFactory {
 
     private void loadExpressions(ConditionExpression conditionExpression, IndicatorIterator indicatorIterator) {
         List<StlExpression> expressionList = conditionExpression.getExpressionList();
-        while (indicatorIterator.hasNext()) {
-            indicatorIterator.current();
+        while (indicatorIterator.hasNext() && !Objects.equals(indicatorIterator.current(), "}")) {
             expressionList.add(StlExpressionFactory.parseExpression(indicatorIterator));
         }
     }

@@ -4,6 +4,7 @@ import lombok.extern.slf4j.Slf4j;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.text.MessageFormat;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
@@ -18,6 +19,14 @@ public class IndicatorIterator extends AbstractBufferIterator<String> {
         this.stream = stream;
         readChar();
         curItem = findNextIndicator();
+    }
+
+    public InputStream getStream() {
+        return stream;
+    }
+
+    public static boolean isOperator(char ch) {
+        return OperatorChs.contains(ch);
     }
 
     @Override
@@ -60,10 +69,12 @@ public class IndicatorIterator extends AbstractBufferIterator<String> {
 
     private void ignoreSpaceCh() {
         while (Character.isWhitespace(nextCh)) {
-            readChar();
-        }
-        if (nextCh == '#') {
-            gotoLineFinish();
+            while (Character.isWhitespace(nextCh)) {
+                readChar();
+            }
+            if (nextCh == '#') {
+                gotoLineFinish();
+            }
         }
     }
 
@@ -91,4 +102,10 @@ public class IndicatorIterator extends AbstractBufferIterator<String> {
         }
     }
 
+    public String locateMessage() {
+        if (stream instanceof LocatedStream) {
+            return ((LocatedStream) stream).locateMessage() + "; Current Item:" + curItem;
+        }
+        return curItem;
+    }
 }

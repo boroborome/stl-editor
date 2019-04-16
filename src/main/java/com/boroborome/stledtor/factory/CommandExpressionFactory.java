@@ -18,12 +18,13 @@ public class CommandExpressionFactory extends StlExpressionFactory {
             return null;
         }
         CommandExpression commandExpression = new CommandExpression();
-        commandExpression.setCommand(indicatorIterator.current());
+        commandExpression.setCommand(indicatorIterator.next());
         List<String> params = commandExpression.getParams();
-        for (String param = indicatorIterator.next();
-             param != null && !StlConst.CommandFinish.equals(param);
-             param = indicatorIterator.next()) {
+        for (String param = indicatorIterator.current();
+             param != null && !StlConst.isBlockEnd(param); ) {
             params.add(param);
+            indicatorIterator.next();
+            param = indicatorIterator.current();
         }
         return commandExpression;
     }
@@ -37,6 +38,9 @@ public class CommandExpressionFactory extends StlExpressionFactory {
         commandList.add("*D");
         commandList.add("/D");
         commandList.add("S");
+        commandList.add("MOVD");
+        commandList.add("AW>");
+        commandList.add("AW<=");
         return commandList;
     }
 }

@@ -1,13 +1,45 @@
 package com.boroborome.stledtor;
 
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
+import com.boroborome.stledtor.formater.StlProjectFormater;
+import com.boroborome.stledtor.model.StlProject;
+import com.boroborome.stledtor.util.IndicatorIterator;
+import com.boroborome.stledtor.util.LocatedStream;
 
-@SpringBootApplication
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.PrintStream;
+
+//@SpringBootApplication
 public class StlEdtorApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(StlEdtorApplication.class, args);
+	public static void main(String[] args) throws FileNotFoundException {
+//		SpringApplication.run(StlEdtorApplication.class, args);
+		if (args.length != 3) {
+			System.out.println("stl-editor input vars output");
+		}
+
+		IndicatorIterator indicatorIterator = loadIndicatorIterator(args[0]);
+		PrintStream output = creatOutput(args[2]);
+
+		StlProject project = loadProject(indicatorIterator);
+		new StlProjectFormater().format(project, output);
+	}
+
+	private static StlProject loadProject(IndicatorIterator indicatorIterator) {
+		StlProject project = new StlProject();
+		project.initialize(indicatorIterator);
+		return project;
+	}
+
+	private static PrintStream creatOutput(String outputFile) throws FileNotFoundException {
+		return new PrintStream(new FileOutputStream(new File(outputFile)), true);
+	}
+
+	private static IndicatorIterator loadIndicatorIterator(String inputFile) throws FileNotFoundException {
+		FileInputStream fileInputStream = new FileInputStream(new File(inputFile));
+		return new IndicatorIterator(new LocatedStream(fileInputStream));
 	}
 
 }
