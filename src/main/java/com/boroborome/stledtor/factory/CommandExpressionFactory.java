@@ -7,6 +7,7 @@ import com.boroborome.stledtor.util.IndicatorIterator;
 
 import java.util.HashSet;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 
 public class CommandExpressionFactory extends StlExpressionFactory {
@@ -25,6 +26,12 @@ public class CommandExpressionFactory extends StlExpressionFactory {
             params.add(param);
             indicatorIterator.next();
             param = indicatorIterator.current();
+            if (Objects.equals(param, ",")) {
+                indicatorIterator.ignore(",");
+                param = indicatorIterator.current();
+            } else {
+                break;
+            }
         }
         return commandExpression;
     }

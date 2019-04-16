@@ -1,5 +1,6 @@
 package com.boroborome.stledtor;
 
+import com.alibaba.fastjson.JSON;
 import com.boroborome.stledtor.formater.StlProjectFormater;
 import com.boroborome.stledtor.model.StlProject;
 import com.boroborome.stledtor.util.IndicatorIterator;
@@ -24,6 +25,7 @@ public class StlEdtorApplication {
 		PrintStream output = creatOutput(args[2]);
 
 		StlProject project = loadProject(indicatorIterator);
+		System.out.println(JSON.toJSONString(project));
 		new StlProjectFormater().format(project, output);
 	}
 
