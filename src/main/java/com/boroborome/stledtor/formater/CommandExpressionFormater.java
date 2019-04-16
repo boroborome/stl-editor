@@ -6,7 +6,7 @@ import com.boroborome.stledtor.util.TabPrintStream;
 public class CommandExpressionFormater extends StlFormater<CommandExpression> {
     @Override
     protected void doFormat(CommandExpression expression, TabPrintStream output) {
-        output.print(expression.getCommand());
+        output.writeTabs().print(expression.getCommand());
         output.print("\t");
 
         boolean firstParam = true;

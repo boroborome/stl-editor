@@ -21,7 +21,7 @@ public class TabPrintStream extends PrintStream {
 
     public void increaseTab() {
         tabs++;
-    }xxxxxxx
+    }
 
     public void descreaseTab() {
         tabs--;
@@ -31,13 +31,14 @@ public class TabPrintStream extends PrintStream {
     public void write(int b) {
         super.write(b);
         if (b == '\n') {
-            for (int i = 0;i < tabs; i++) {
-                super.write('\t');
-            }
+            writeTabs();
         }
     }
 
-    private static class TabBufferedStream {
-        
+    public TabPrintStream writeTabs() {
+        for (int i = 0;i < tabs; i++) {
+            super.write('\t');
+        }
+        return this;
     }
 }
