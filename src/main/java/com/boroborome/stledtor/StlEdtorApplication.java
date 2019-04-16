@@ -26,7 +26,7 @@ public class StlEdtorApplication {
 		TabPrintStream output = creatOutput(args[2]);
 
 		StlProject project = loadProject(indicatorIterator);
-		System.out.println(JSON.toJSONString(project));
+//		System.out.println(JSON.toJSONString(project));
 		new StlProjectFormater().format(project, output);
 	}
 

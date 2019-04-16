@@ -5,6 +5,9 @@ import com.boroborome.stledtor.model.StlConst;
 import com.boroborome.stledtor.model.StlExpression;
 import com.boroborome.stledtor.util.IndicatorIterator;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
@@ -38,16 +41,19 @@ public class CommandExpressionFactory extends StlExpressionFactory {
 
     private static Set<String> allCommand() {
         Set<String> commandList = new HashSet<>();
-        commandList.add("LD");
-        commandList.add("A");
-        commandList.add("-D");
-        commandList.add("+D");
-        commandList.add("*D");
-        commandList.add("/D");
-        commandList.add("S");
-        commandList.add("MOVD");
-        commandList.add("AW>");
-        commandList.add("AW<=");
+        BufferedReader configReader = new BufferedReader(
+                new InputStreamReader(
+                CommandExpressionFactory.class.getResourceAsStream("/commands.txt")));
+        try {
+            for (String command = configReader.readLine();
+                 command != null;
+                 command = configReader.readLine()) {
+                commandList.add(command);
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         return commandList;
     }
 }
