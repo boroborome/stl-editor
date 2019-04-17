@@ -20,20 +20,30 @@ public class ConditionExpressionFormater extends StlFormater<ConditionExpression
     }
 
     private void formatConditionExpList(List<StlExpression> expressionList, TabPrintStream output) {
-        output.writeTabs().println("LPS");
-
         List<List<StlExpression>> groupExpList = groupExpressions(expressionList);
+        boolean useGroupCmd = groupExpList.size() > 1;
+
+        if (useGroupCmd) {
+            output.writeTabs().println("LPS");
+        }
         boolean first = true;
         for (List<StlExpression> groupExp : groupExpList) {
-            if (!first) {
+            if (!first && useGroupCmd) {
                 output.writeTabs().println("LRD");
             }
             first = false;
-            output.increaseTab();
+
+            if (useGroupCmd) {
+                output.increaseTab();
+            }
             formatExpBlock(groupExp, output);
-            output.descreaseTab();
+            if (useGroupCmd) {
+                output.descreaseTab();
+            }
         }
-        output.writeTabs().println("LPP");
+        if (useGroupCmd) {
+            output.writeTabs().println("LPP");
+        }
     }
 
     private List<List<StlExpression>> groupExpressions(List<StlExpression> expressionList) {
