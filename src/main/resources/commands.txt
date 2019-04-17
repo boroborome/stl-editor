@@ -1,6 +1,10 @@
 AB<=
 AB>=
 AD>
+AD>=
+AD=
+AD<
+AD<=
 AR<
 AR<=
 AR>
