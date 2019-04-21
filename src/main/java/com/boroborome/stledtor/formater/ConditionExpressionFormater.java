@@ -6,20 +6,21 @@ import com.boroborome.stledtor.util.TabPrintStream;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class ConditionExpressionFormater extends StlFormater<ConditionExpression> {
     @Override
-    protected void doFormat(ConditionExpression expression, TabPrintStream output) {
-        StlFormater.format(expression.getCriteriaExpression(), output);
+    protected void doFormat(ConditionExpression expression, TabPrintStream output, Map<String, String> symbolMap) {
+        StlFormater.format(expression.getCriteriaExpression(), output, symbolMap);
 
         if (containsConditionExpression(expression.getExpressionList())) {
-            formatConditionExpList(expression.getExpressionList(), output);
+            formatConditionExpList(expression.getExpressionList(), output, symbolMap);
         } else {
-            formatExpBlock(expression.getExpressionList(), output);
+            formatExpBlock(expression.getExpressionList(), output, symbolMap);
         }
     }
 
-    private void formatConditionExpList(List<StlExpression> expressionList, TabPrintStream output) {
+    private void formatConditionExpList(List<StlExpression> expressionList, TabPrintStream output, Map<String, String> symbolMap) {
         List<List<StlExpression>> groupExpList = groupExpressions(expressionList);
         boolean useGroupCmd = groupExpList.size() > 1;
 
@@ -36,7 +37,7 @@ public class ConditionExpressionFormater extends StlFormater<ConditionExpression
             if (useGroupCmd) {
                 output.increaseTab();
             }
-            formatExpBlock(groupExp, output);
+            formatExpBlock(groupExp, output, symbolMap);
             if (useGroupCmd) {
                 output.descreaseTab();
             }
@@ -78,14 +79,14 @@ public class ConditionExpressionFormater extends StlFormater<ConditionExpression
         return false;
     }
 
-    private void formatExpBlock(List<StlExpression> expressionList, TabPrintStream output) {
+    private void formatExpBlock(List<StlExpression> expressionList, TabPrintStream output, Map<String, String> symbolMap) {
         boolean first = true;
         for (StlExpression subExp : expressionList) {
             if (!first && output.getTabs() > 0) {
                 output.writeTabs().println("AENO");
             }
             first = false;
-            StlFormater.format(subExp, output);
+            StlFormater.format(subExp, output, symbolMap);
         }
     }
 }
